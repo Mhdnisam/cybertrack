@@ -1,0 +1,197 @@
+{% block content %}
+  <h2 class="form-title">Client Request View</h2>
+  
+  <!-- Back Button -->
+  <div class="back-button-container">
+    <button onclick="window.history.back()" class="btn-back">Back to Previous Page</button>
+  </div>
+  
+  <div class="requests-container">
+    <table class="requests-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Request Date</th>
+          <th>User</th>
+          <th>Approval Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for request_info in requests %}
+          <tr>
+            <td>{{ request_info.request.title }}</td>
+            <td>{{ request_info.request.description }}</td>
+            <td>{{ request_info.request.request_date }}</td>
+            <td>{{ request_info.user_first_name }} {{ request_info.user_last_name }} ({{ request_info.user_name }})</td>
+            <td>
+              {% if request_info.request.approved is None %}
+                <span class="status-pending">Pending</span>
+              {% elif request_info.request.approved %}
+                <span class="status-approved">Approved</span>
+              {% else %}
+                <span class="status-rejected">Rejected</span>
+              {% endif %}
+            </td>
+            <td>
+              <form method="POST" action="{% url 'manage_requests' %}">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ request_info.request.id }}">
+                <button type="submit" name="action" value="approve" class="btn-approve">Approve</button>
+                <button type="submit" name="action" value="reject" class="btn-reject">Reject</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <style>
+    /* Google-like Font */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #202124;
+    }
+
+    /* Back Button */
+    .back-button-container {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .btn-back {
+      padding: 10px 20px;
+      background-color: #4285F4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .btn-back:hover {
+      background-color: #357ae8;
+    }
+
+    /* Table Container */
+    .requests-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .requests-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .requests-table th,
+    .requests-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .requests-table th {
+      background-color: #f2f2f2;
+      color: #5f6368;
+      font-weight: 500;
+    }
+
+    .requests-table td {
+      color: #202124;
+    }
+
+    /* Action Buttons */
+    .btn-approve,
+    .btn-reject {
+      padding: 8px 16px;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-right: 10px;
+    }
+
+    .btn-approve {
+      background-color: #34a853;
+    }
+
+    .btn-approve:hover {
+      background-color: #2c8e43;
+      transform: scale(1.05);
+    }
+
+    .btn-reject {
+      background-color: #fbbc04;
+    }
+
+    .btn-reject:hover {
+      background-color: #e68901;
+      transform: scale(1.05);
+    }
+
+    /* Status Indicators */
+    .status-pending {
+      background-color: #fbbc04;
+      padding: 4px 10px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    .status-approved {
+      background-color: #34a853;
+      padding: 4px 10px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    .status-rejected {
+      background-color: #f44336;
+      padding: 4px 10px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    /* Table Row Hover Effect */
+    .requests-table tr:hover {
+      background-color: #f7f7f7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .requests-table th, .requests-table td {
+        padding: 12px;
+      }
+
+      .requests-container {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .form-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+{% endblock %}

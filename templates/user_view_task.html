@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Assigned Tasks</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .task-item {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .task-item h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .task-item p {
+            font-size: 14px;
+            color: #666;
+        }
+        .task-item form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .task-item button {
+            background-color: #4A90E2;
+            color: white;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .task-item button:hover {
+            background-color: #357ABD;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Your Assigned Tasks</h1>
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task-item">
+                <h3>{{ task.task_name }}</h3>
+                <p>Description: {{ task.description }}</p>
+                <p>Deadline: {{ task.deadline }}</p>
+                <p>Status: {% if task.is_completed %} Completed {% else %} In Progress {% endif %}</p>
+                <p>Submission Date: {% if task.submission_date %} {{ task.submission_date }} {% else %} Not submitted yet {% endif %}</p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+
+                    {% if not task.is_completed %}
+                    <button type="submit" name="action" value="mark_completed">Mark as Completed</button>
+                    {% endif %}
+
+                    {% if not task.submission_date %}
+                    <button type="submit" name="action" value="add_submission_date">Add Submission Date</button>
+                    {% endif %}
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Your Company</p>
+        </div>
+    </div>
+
+</body>
+</html>

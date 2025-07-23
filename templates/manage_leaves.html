@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Leave Requests</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .table .btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        /* Empty Message Style */
+        .no-request {
+            text-align: center;
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .table th,
+            .table td {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Manage Leave Requests</h2>
+
+        {% if leave_requests %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leave in leave_requests %}
+                        <tr>
+                            <td>{{ leave.user.username }}</td>
+                            <td>{{ leave.leave_type }}</td>
+                            <td>{{ leave.start_date }}</td>
+                            <td>{{ leave.end_date }}</td>
+                            <td>{{ leave.status }}</td>
+                            <td>
+                                <a href="{% url 'approve_leave' leave_id=leave.id %}" class="btn btn-success">Approve</a>
+                                <a href="{% url 'reject_leave' leave_id=leave.id %}" class="btn btn-danger">Reject</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-request">No pending leave requests.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

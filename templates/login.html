@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{% static "img/EIMG.jpg" %}'); /* Add your background image URL here */
+           
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 36px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+            width: 100%;
+        }
+
+        /* Form Title */
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Form Fields */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input {
+            width: 94%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Submit Button */
+        button {
+            padding: 10px;
+            background-color: rgb(119, 185, 218);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: rgb(90, 160, 190);
+        }
+
+        /* Toggle password visibility */
+        .password-container {
+            position: relative;
+        }
+
+        .password-container input {
+            padding-right: 10px;
+        }
+
+        .password-container .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        /* Success Modal Styles */
+        #loginSuccessModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .modal-content p {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .modal-content button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgb(119, 185, 218);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background-color: rgb(90, 160, 190);
+        }
+        .back-button {
+            background-color: #f8f9fa;
+            color: #000;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto 0;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+        /* Message Styles */
+        .messages {
+            margin-top: 15px;
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Login</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+            </div>
+
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="/register">Register here</a>.</p>
+              <!-- Back button -->
+        <a href="javascript:history.back()" class="back-button">Back</a>
+
+
+            <!-- Displaying messages if any -->
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Login Success Modal -->
+    <div id="loginSuccessModal">
+        <div class="modal-content">
+            <h2>Login Successful!</h2>
+            <p>Welcome back! You are now logged in.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '👁️';  // Open eye icon
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '🔒';  // Closed eye icon
+            }
+        }
+
+        // Show login success modal if the login is successful
+        {% if messages %}
+            {% for message in messages %}
+                if ("{{ message }}" === "Login successful!") {
+                    document.getElementById('loginSuccessModal').style.display = 'flex';
+                }
+            {% endfor %}
+        {% endif %}
+
+        // Close the success modal
+        function closeModal() {
+            document.getElementById('loginSuccessModal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

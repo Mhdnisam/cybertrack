@@ -1,0 +1,249 @@
+{% block content %}
+  <h2 class="view-title">My Requests</h2>
+  
+  <div class="requests-container">
+    <table class="requests-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for req in requests %}
+          <tr>
+            <td>{{ req.title }}</td>
+            <td>{{ req.description }}</td>
+            <td>{{ req.request_date|date:"F j, Y" }}</td> <!-- Date formatted for readability -->
+            <td>
+              {% if req.approved is None %}
+                <span class="status pending">
+                  <i class="status-icon fas fa-clock"></i> Pending
+                </span>
+              {% elif req.approved %}
+                <span class="status approved">
+                  <i class="status-icon fas fa-check-circle"></i> Approved
+                </span>
+              {% else %}
+                <span class="status rejected">
+                  <i class="status-icon fas fa-times-circle"></i> Rejected
+                </span>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="no-requests">You have no requests at the moment.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    {% if requests.has_other_pages %}
+      <div class="pagination">
+        <span class="step-links">
+          {% if requests.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ requests.previous_page_number }}">Previous</a>
+          {% endif %}
+          
+          <span class="current">
+            Page {{ requests.number }} of {{ requests.paginator.num_pages }}.
+          </span>
+          
+          {% if requests.has_next %}
+            <a href="?page={{ requests.next_page_number }}">Next</a>
+            <a href="?page={{ requests.paginator.num_pages }}">Last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+
+    <!-- Back Button -->
+    <div class="back-button-container">
+      <a href="{{ request.META.HTTP_REFERER }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+    </div>
+  </div>
+
+  <style>
+    /* General Reset */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    /* Page Header */
+    .view-title {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Requests Container */
+    .requests-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .requests-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table Styling */
+    .requests-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      table-layout: fixed;
+    }
+
+    .requests-table th, .requests-table td {
+      padding: 18px 22px;
+      text-align: left;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .requests-table th {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .requests-table tr:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Status Labels */
+    .status {
+      display: inline-block;
+      padding: 8px 16px;
+      font-weight: bold;
+      border-radius: 30px;
+      color: #fff;
+      text-transform: capitalize;
+    }
+
+    .status.pending {
+      background-color: #ff9800;
+    }
+
+    .status.approved {
+      background-color: #4caf50;
+    }
+
+    .status.rejected {
+      background-color: #f44336;
+    }
+
+    .status-icon {
+      margin-right: 10px;
+    }
+
+    /* Empty Request Message */
+    .no-requests {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      font-size: 18px;
+    }
+
+    /* Pagination */
+    .pagination {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .pagination a {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 0 5px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+      background-color: #0056b3;
+    }
+
+    .pagination .current {
+      background-color: #ddd;
+      color: #333;
+    }
+
+    /* Icons */
+    .status-icon {
+      font-size: 18px;
+    }
+
+    /* Back Button */
+    .back-button-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-btn {
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      display: inline-block;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    /* Mobile-Friendly Design */
+    @media (max-width: 768px) {
+      .requests-container {
+        padding: 20px;
+      }
+
+      .view-title {
+        font-size: 26px;
+      }
+
+      .requests-table th, .requests-table td {
+        padding: 14px 18px;
+      }
+
+      .pagination a {
+        padding: 10px 18px;
+        font-size: 14px;
+      }
+
+      .back-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+{% endblock %}

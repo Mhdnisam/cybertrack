@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Harvest Hub</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f1f3f4; /* Light gray */
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background: #ffffff; /* White background */
+            color: #202124; /* Dark gray text */
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1a73e8; /* Google's blue */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar a {
+            color: #202124;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            gap: 10px;
+            transition: background-color 0.3s, padding-left 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #e8f0fe; /* Light blue on hover */
+            padding-left: 20px;
+        }
+
+        .sidebar a i {
+            font-size: 1.5rem;
+            color: #1a73e8; /* Icon in Google's blue */
+        }
+
+        /* Main Content Styles */
+        .main {
+            margin-left: 260px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .header {
+            background: #1a73e8; /* Google's blue */
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+
+        .header .profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Card Styles */
+        .content {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: #202124;
+            margin-bottom: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card p {
+            color: #5f6368; /* Google's gray */
+            margin: 10px 0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .stats div {
+            text-align: center;
+            font-size: 1rem;
+            color: #1a73e8; /* Google's blue */
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            margin-top: 20px;
+            padding: 12px 24px; /* Slightly larger for better clickability */
+            background: white; /* White background for a clean look */
+            color: #1a73e8; /* Google's blue for text */
+            text-decoration: none; /* No underline */
+            border-radius: 8px; /* Smooth edges */
+            border: 2px solid #1a73e8; /* Blue border to complement the text */
+            display: inline-block;
+            font-size: 1rem; /* Comfortable text size */
+            font-weight: 500; /* Slightly bold for emphasis */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        .back-button:hover {
+            background: #1a73e8; /* Blue background on hover */
+            color: white; /* White text on hover for contrast */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        /* Moving Text Animation */
+        .moving-text {
+            background: #34a853; /* Google's green */
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+            animation: move 10s linear infinite;
+        }
+
+        @keyframes move {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .sidebar h2 {
+                font-size: 1rem;
+                text-align: left;
+            }
+
+            .sidebar a span {
+                display: none; /* Hide text on small screens */
+            }
+
+            .main {
+                margin-left: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .header .profile {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>PROJECT MANAGER</h2>
+    <a href="{% url 'task' %}"><i class="fas fa-tasks"></i><span>Tasks</span></a>
+    <a href="{% url 'manage_requests' %}"><i class="fas fa-users"></i><span>Client Details</span></a>
+    <a href="{% url '' %}"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    <!-- Back Button -->
+    <a href="javascript:history.back()" class="back-button">Back</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+    <div class="header">
+        <h1>Welcome to Your Dashboard</h1>
+        <div class="profile">
+            <span>Hello, Project Manager</span>
+            <img src="https://via.placeholder.com/40" alt="Profile Picture">
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="card">
+            <h2>Task Overview</h2>
+            <p>Monitor and manage your tasks efficiently.</p>
+            <div class="stats">
+                <div><strong>10</strong> Tasks</div>
+                <div><strong>5</strong> Completed</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Client Details</h2>
+            <p>Review client information and requests.</p>
+        </div>
+
+        <div class="card">
+            <h2>Recent Activity</h2>
+            <p>Stay updated with the latest project activities.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

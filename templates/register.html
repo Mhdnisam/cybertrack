@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Heading */
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h2 span {
+            color: #667eea;
+        }
+
+        /* Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #777;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Links */
+        .login-link, .back-button {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .login-link a, .back-button {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover, .back-button:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Success Modal */
+        #successModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .messages {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Create Your <span>Account</span></h2>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="text" name="username" placeholder="Username" required>
+
+     
+            <input type="password" name="password" placeholder="Password" required>
+            <span class="eye-icon" onclick="togglePassword()">👁</span>
+            
+
+            <input type="date" name="dob" placeholder="Date of Birth" required>
+            <textarea name="address" placeholder="Address" rows="3" required></textarea>
+            <input type="tel" name="phone_number" placeholder="Phone Number" required>
+            <input type="file" name="image" accept="image/*">
+
+            <button type="submit">Register</button>
+        </form>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
+
+        <a href="javascript:history.back()" class="back-button">Go Back</a>
+    </div>
+
+    <div id="successModal">
+        <h2>Registration Successful!</h2>
+        <p>Please login with your credentials.</p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        function togglePassword() {
+            let passwordField = document.querySelector("input[name='password']");
+            let eyeIcon = document.querySelector(".eye-icon");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+
+        {% if messages %}
+            {% for message in messages %}
+                if ("{{ message }}".includes('successful')) {
+                    document.getElementById('successModal').style.display = 'block';
+                }
+            {% endfor %}
+        {% endif %}
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

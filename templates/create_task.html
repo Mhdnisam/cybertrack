@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #1a73e8;
+            font-size: 2em;
+            font-weight: 500;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #1a73e8;
+            border: 2px solid #1a73e8;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1a73e8;
+            color: white;
+        }
+
+        /* Form Labels and Inputs */
+        label {
+            font-weight: 500;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            display: block;
+            color: #5f6368;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95em;
+            background-color: #f8f9fa;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        input[type="datetime-local"]:focus,
+        select:focus {
+            border-color: #1a73e8;
+            outline: none;
+            background-color: #ffffff;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        /* Employee List */
+        .employee-list {
+            margin-bottom: 20px;
+        }
+
+        .employee-list select {
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            font-size: 0.95em;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #135bbd;
+            transform: scale(1.02);
+        }
+
+        /* Message Section */
+        .message {
+            color: #34a853;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Task Status */
+        .task-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f1f3f4;
+            border-radius: 8px;
+        }
+
+        .task-status span {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #5f6368;
+        }
+
+        .task-status span:last-child {
+            background-color: #fbbc04;
+            padding: 6px 12px;
+            color: white;
+            border-radius: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .btn-submit {
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="javascript:history.back()" class="back-button">Back</a>
+        <h1>Create Task</h1>
+
+        <!-- Display Success or Error Messages -->
+        {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Task Creation Form -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="task_name">Task Name:</label>
+                <input type="text" name="task_name" id="task_name" placeholder="Enter task name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" placeholder="Describe the task"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="deadline">Deadline:</label>
+                <input type="datetime-local" name="deadline" id="deadline" required>
+            </div>
+
+            <div class="employee-list">
+                <label for="employee">Assign Employee:</label>
+                <select name="employee_id" id="employee">
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Create Task</button>
+        </form>
+
+        <!-- Task Status (if applicable) -->
+        {% if task %}
+            <div class="task-status">
+                <span>Task Status:</span>
+                <span>Pending</span>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
+
+
+
+

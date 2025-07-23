@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Harvest Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f2f2f2; 
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #1a73e8;
+        }
+
+        .sidebar a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 8px;
+            transition: background 0.3s ease, padding-left 0.3s ease;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #4285f4;
+            color: white;
+            padding-left: 24px;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 40px;
+            flex-grow: 1;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            background-color: #4285f4;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .content {
+            margin-top: 30px;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .profile-card {
+            background-color: #f5f5f5;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .profile-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .profile-image-container {
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+        }
+
+        .profile-details {
+            margin-top: 20px;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .profile-value {
+            color: #6b7280;
+        }
+
+        .edit-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-edit {
+            background-color: #4285f4;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-edit:hover {
+            background-color: #3367d6;
+        }
+        .back-button {
+            background-color: #f8f9fa;
+            color: #000;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto 0;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>EMS User</h2>
+        <a href="{% url 'attendance' %}"><i class="fas fa-user"></i> Attendance</a>
+        <a href="{% url 'leave' %}"><i class="fas fa-user"></i> Leave</a>
+        <a href="{% url 'user_tasks' %}"><i class="fas fa-tasks"></i> View Task</a>
+        <a href="{% url 'view_profile' %}"><i class="fas fa-tasks"></i> Profile</a>
+        <a href="{% url '' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="javascript:history.back()" class="back-button">Back</a>
+    </div>
+    
+    <div class="main">
+        <div class="header">
+            <h1>Dashboard</h1>
+            <span>Welcome, User</span>
+        </div>
+
+        <div class="content">
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h2>Your Profile</h2>
+                    </div>
+
+                    <div class="profile-image-container">
+                        <img src="{{ profile.image.url }}" alt="Profile Image" class="profile-image">
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="profile-item">
+                            <span class="profile-label">Full Name:</span>
+                            <span class="profile-value">{{ profile.name }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Username:</span>
+                            <span class="profile-value">{{ profile.user.username }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Date of Birth:</span>
+                            <span class="profile-value">{{ profile.dob }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Address:</span>
+                            <span class="profile-value">{{ profile.address }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Phone Number:</span>
+                            <span class="profile-value">{{ profile.phone_number }}</span>
+                        </div>
+
+                        <div class="edit-button-container">
+                            <a href="{% url 'edit_profile' %}" class="btn-edit">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!-- view_task_answers.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Answers - {{ task.task_name }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-image: linear-gradient(to right, #ece9e6, #ffffff);
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            color: #4A90E2;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 25px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .task-details {
+            margin-bottom: 30px;
+        }
+
+        .answer-list .answer-item {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .answer-item .employee {
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        .answer-item .answer {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task: {{ task.task_name }}</h1>
+
+        <!-- Task Details -->
+        <div class="task-details">
+            <h3>Description</h3>
+            <p>{{ task.description }}</p>
+            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            <p><strong>Assigned Employees:</strong> {% for employee in task.employees.all %}{{ employee.username }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        </div>
+
+        <!-- Answers Submitted by Employees -->
+        <div class="answer-list">
+            <h3>Employee Answers</h3>
+            {% if answers %}
+                {% for answer in answers %}
+                    <div class="answer-item">
+                        <p class="employee">{{ answer.employee.username }}</p>
+                        <p class="answer">{{ answer.answer_text }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No answers submitted yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

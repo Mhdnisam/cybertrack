@@ -1,0 +1,121 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Task Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-column {
+            width: 45%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-column h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .task-card {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-card p {
+            margin: 5px 0;
+        }
+
+        .task-card button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .task-card button:hover {
+            background-color: #45a049;
+        }
+
+        .task-column p {
+            color: #555;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>{{ user.username }}'s Task Dashboard</h1>
+
+    <div class="container">
+
+        <!-- Pending Tasks -->
+        <div class="task-column">
+            <h2>Pending Tasks</h2>
+            {% if pending_tasks %}
+                {% for task in pending_tasks %}
+                    <div class="task-card">
+                        <h3>{{ task.task_name }}</h3>
+                        <p><strong>Description:</strong> {{ task.description }}</p>
+                        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <button type="submit">Mark as Completed</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No pending tasks</p>
+            {% endif %}
+        </div>
+
+        <!-- Completed Tasks -->
+        <div class="task-column">
+            <h2>Completed Tasks</h2>
+            {% if completed_tasks %}
+                {% for task in completed_tasks %}
+                    <div class="task-card">
+                        <h3>{{ task.task_name }}</h3>
+                        <p><strong>Description:</strong> {{ task.description }}</p>
+                        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+                        <p><strong>Status:</strong> Completed</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No completed tasks</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR - Attendance List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1000px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-size: 18px;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+        tr:hover td {
+            background-color: #e2e2e2;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .present {
+            background-color: #28a745;
+            color: white;
+        }
+        .absent {
+            background-color: #dc3545;
+            color: white;
+        }
+        .filter-form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .filter-form input {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .filter-form button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .filter-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Attendance List for {{ selected_date }}</h1>
+
+    <!-- Date Filter Form -->
+    <form method="get" action="" class="filter-form">
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" value="{{ selected_date|date:'Y-m-d' }}" max="{{ today|date:'Y-m-d' }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendance_records %}
+                <tr>
+                    <td>{{ attendance.user.username }}</td>
+                    <td>{{ attendance.date }}</td>
+                    <td>
+                        {% if attendance.attended %}
+                            <span class="status present">Present</span>
+                        {% else %}
+                            <span class="status absent">Absent</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No attendance records found for this date.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

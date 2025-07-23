@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Task</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to right, #ece9e6, #ffffff); /* Subtle gradient background */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            color: #4A90E2;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;  /* Adjust the max width */
+            padding: 25px;
+            background-color: white;
+            border-radius: 15px; /* Slightly larger border radius for a smoother look */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-field {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            transition: border 0.3s;
+            box-sizing: border-box;
+            height: 44px;  /* Set height for text fields */
+        }
+
+        input[type="text"]:focus,
+        input[type="datetime-local"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #4A90E2;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Submit Button */
+        button[type="submit"] {
+            background-color: #4A90E2;
+            color: white;
+            padding: 14px 22px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: center;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #357ABD;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #4A90E2;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Success Popup Styles */
+        .popup-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 18px 35px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1000;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Task</h1>
+        <div class="container">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-field">
+                    <!-- Display the task form fields except the "assigned_to" field -->
+                    {% for field in form %}
+                        {% if field.name != 'assigned_to' %}
+                            <div class="form-field">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <ul>
+                                        {% for error in field.errors %}
+                                            <li style="color:red;">{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <button type="submit">{% if form.instance.pk %}Update{% else %}Add{% endif %} Task</button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>Need help? <a href="#">Contact Support</a></p>
+        </div>
+    </div>
+
+    <!-- Success Popup Message -->
+    <div id="popupMessage" class="popup-message">
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <script>
+        // Check if there's a success message from Django messages framework
+        {% if messages %}
+            // Display the success message popup
+            document.getElementById('popupMessage').style.display = 'block';
+
+            // Hide the popup after 3 seconds
+            setTimeout(function() {
+                document.getElementById('popupMessage').style.display = 'none';
+            }, 3000);
+        {% endif %}
+    </script>
+</body>
+</html>

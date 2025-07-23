@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Projects</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Same styles as before */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Projects</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.title }}</td>
+                    <td>{{ project.description }}</td>
+                    <td>{{ project.date }}</td>
+                    <td class="status {{ project.status }}">{{ project.get_status_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
