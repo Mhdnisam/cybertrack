@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('',views.index,name=''),
+    path('',views.index,name='index'),
 
 
 # PROJECT MANAGER:-
@@ -92,7 +92,7 @@ path('profile/edit/', views.edit_profile, name='edit_profile'),
 
 # DETAILS ENTRY:-
 
-path('deatails', views.view_details, name='details'),
+path('details/', views.view_details, name='details'),
 
 
 path('submit/', views.submit_request, name='submit_request'),

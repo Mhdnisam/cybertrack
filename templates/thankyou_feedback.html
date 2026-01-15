@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
             text-align: center;
             padding: 50px;
         }
+
         .thank-you-message {
             background-color: #4CAF50;
             color: white;
@@ -20,12 +22,15 @@
             margin: 20px auto;
             width: 60%;
         }
+
         .thank-you-message h1 {
             font-size: 2em;
         }
+
         .thank-you-message p {
             font-size: 1.2em;
         }
+
         .back-button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -36,16 +41,20 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .back-button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="thank-you-message">
         <h1>Thank You for Your Feedback!</h1>
-        <p>We truly appreciate you taking the time to share your thoughts with us. Your feedback helps us improve and serve you better.</p>
-        <button class="back-button" onclick="window.location.href='home.html'">Go Back to Home</button>
+        <p>We truly appreciate you taking the time to share your thoughts with us. Your feedback helps us improve and
+            serve you better.</p>
+        <button class="back-button" onclick="window.location.href='{% url 'index' %}'">Go Back to Home</button>
     </div>
 </body>
+
 </html>

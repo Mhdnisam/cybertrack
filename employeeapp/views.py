@@ -232,8 +232,13 @@ def client_view(request):
     if request.method== 'POST':
         form=UserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('client_login')
+            username = form.cleaned_data.get('username')
+            if clientdetails.objects.filter(username=username).exists():
+                messages.error(request, "Username already exists. Please choose another.")
+            else:
+                form.save()
+                messages.success(request, "Registration successful! Please login.")
+                return redirect('client_login')
     else:
         form=UserForm()
     return render(request,'clientregister.html',{'form':form})
@@ -242,16 +247,26 @@ def clientlogin(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        try:
-            user = clientdetails.objects.get(username=username)
-            if user.password == password:  # In a real-world scenario, use password hashing!
-                request.session['user_id'] = user.id  # Store user ID in the session
-                messages.success(request, f"Welcome, {username}!")
-                return redirect('clientdashboard')  
-            else:
-                messages.error(request, "Incorrect password.")
-        except clientdetails.DoesNotExist:
+        
+        # Filter returns a QuerySet, which can be empty or have multiple items
+        users = clientdetails.objects.filter(username=username)
+        
+        if users.exists():
+            # Check if ANY of the found users has the correct password
+            # In a real app with unique constraints, this loop wouldn't be needed
+            login_success = False
+            for user in users:
+                if user.password == password:
+                    request.session['user_id'] = user.id
+                    messages.success(request, f"Welcome, {username}!")
+                    login_success = True
+                    return redirect('clientdashboard')
+            
+            if not login_success:
+                 messages.error(request, "Incorrect password.")
+        else:
             messages.error(request, "Username does not exist.")
+            
     return render(request, 'clientlogin.html') 
 
 
@@ -511,7 +526,7 @@ def edit_profile(request):
 
 
 def view_details(request):
-    return render(request,('details.html'))
+    return render(request, 'details.html')
 
 
 @login_required

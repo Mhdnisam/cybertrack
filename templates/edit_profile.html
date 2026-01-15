@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EMS User Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -14,6 +15,7 @@
             display: flex;
             background-color: #f1f3f4;
         }
+
         .sidebar {
             width: 240px;
             background: #ffffff;
@@ -26,12 +28,14 @@
             flex-direction: column;
             gap: 20px;
         }
+
         .sidebar h2 {
             font-size: 1.3rem;
             font-weight: 500;
             color: #1a73e8;
             text-align: center;
         }
+
         .sidebar a {
             color: #202124;
             text-decoration: none;
@@ -44,19 +48,23 @@
             gap: 10px;
             transition: background-color 0.3s, padding-left 0.3s;
         }
+
         .sidebar a:hover {
             background-color: #e8f0fe;
             padding-left: 20px;
         }
+
         .sidebar a i {
             font-size: 1.5rem;
             color: #1a73e8;
         }
+
         .main {
             margin-left: 260px;
             padding: 20px;
             flex-grow: 1;
         }
+
         .header {
             background: #1a73e8;
             color: white;
@@ -67,35 +75,42 @@
             justify-content: space-between;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         .header h1 {
             margin: 0;
             font-size: 1.6rem;
             font-weight: 500;
         }
+
         .content {
             margin-top: 20px;
         }
+
         .edit-profile-card {
             background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         .form-group label {
             font-weight: 500;
             display: block;
             margin-bottom: 5px;
         }
-        .form-group input, 
+
+        .form-group input,
         .form-group select {
             width: 100%;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+
         .btn {
             background: #1a73e8;
             color: white;
@@ -105,9 +120,11 @@
             cursor: pointer;
             transition: background 0.3s;
         }
+
         .btn:hover {
             background: #1558b8;
         }
+
         .back-button {
             background-color: #f8f9fa;
             color: #000;
@@ -121,11 +138,13 @@
             text-decoration: none;
             font-size: 14px;
         }
+
         .back-button:hover {
             background-color: #e0e0e0;
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <h2>EMS User</h2>
@@ -133,7 +152,7 @@
         <a href="{% url 'leave' %}"><i class="fas fa-user"></i> <span>Leave</span></a>
         <a href="{% url 'user_tasks' %}"><i class="fas fa-tasks"></i> <span>View Task</span></a>
         <a href="{% url 'view_profile' %}"><i class="fas fa-user-circle"></i> <span>Profile</span></a>
-        <a href="{% url '' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+        <a href="{% url 'index' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
         <a href="javascript:history.back()" class="back-button">Back</a>
     </div>
     <div class="main">
@@ -148,7 +167,8 @@
                     <div class="form-group text-center">
                         <label for="id_image">Profile Picture</label>
                         <div>
-                            <img id="profile-image-preview" src="{{ form.instance.image.url }}" alt="Profile Image" class="img-thumbnail mb-2">
+                            <img id="profile-image-preview" src="{{ form.instance.image.url }}" alt="Profile Image"
+                                class="img-thumbnail mb-2">
                         </div>
                         {{ form.image }}
                     </div>
@@ -184,4 +204,5 @@
         </div>
     </div>
 </body>
+
 </html>

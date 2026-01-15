@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,8 +32,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Heading Styles */
@@ -60,7 +68,8 @@
             text-align: left;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"],
+        input[type="password"] {
             padding: 12px;
             font-size: 1rem;
             margin-bottom: 20px;
@@ -69,7 +78,8 @@
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
+        input[type="text"]:focus,
+        input[type="password"]:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
@@ -135,8 +145,15 @@
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .message-box p {
@@ -165,14 +182,15 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="container">
         <h2>Login to <span>Your Space</span></h2>
-        
+
         <form method="POST">
             {% csrf_token %}
-            
+
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
@@ -183,7 +201,7 @@
         </form>
 
         <div class="links">
-            <p>Don't have an account? <a href="/register">Register</a></p>
+            <p>Don't have an account? <a href="{% url 'client_register' %}">Register</a></p>
             <p><a href="/forgot-password">Forgot password?</a></p>
         </div>
 
@@ -194,7 +212,15 @@
         <!-- <div class="message-box">
             <p>Invalid username or password. Please try again.</p>
         </div> -->
+        {% if messages %}
+        <div class="message-box">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 
 </body>
+
 </html>

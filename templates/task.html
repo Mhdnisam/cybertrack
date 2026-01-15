@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,8 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             display: flex;
-            background-color: #f1f3f4; /* Light gray background */
+            background-color: #f1f3f4;
+            /* Light gray background */
         }
 
         /* Sidebar */
@@ -58,7 +60,8 @@
             padding-left: 20px;
         }
 
-        .sidebar a i, .sidebar a .material-icons {
+        .sidebar a i,
+        .sidebar a .material-icons {
             font-size: 1.5rem;
         }
 
@@ -70,7 +73,8 @@
         }
 
         .header {
-            background: #1a73e8; /* Google's blue */
+            background: #1a73e8;
+            /* Google's blue */
             color: white;
             padding: 20px;
             border-radius: 8px;
@@ -139,11 +143,13 @@
 
         /* Highlight Borders */
         .add-task {
-            border-left: 5px solid #34a853; /* Google's green */
+            border-left: 5px solid #34a853;
+            /* Google's green */
         }
 
         .view-task {
-            border-left: 5px solid #4285f4; /* Google's blue */
+            border-left: 5px solid #4285f4;
+            /* Google's blue */
         }
 
         /* Hover Effects */
@@ -154,23 +160,30 @@
         /* Back Button Styles */
         .back-button {
             padding: 12px 24px;
-            background: white; /* White background */
-            color: #1a73e8; /* Blue text */
+            background: white;
+            /* White background */
+            color: #1a73e8;
+            /* Blue text */
             text-decoration: none;
-            border: 2px solid #1a73e8; /* Blue border */
+            border: 2px solid #1a73e8;
+            /* Blue border */
             border-radius: 8px;
             font-size: 1rem;
             font-weight: 500;
             transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
             display: inline-block;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
         }
 
         .back-button:hover {
-            background: #1a73e8; /* Blue background on hover */
-            color: white; /* White text on hover */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+            background: #1a73e8;
+            /* Blue background on hover */
+            color: white;
+            /* White text on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Darker shadow on hover */
         }
 
         /* Responsive Design */
@@ -182,7 +195,8 @@
             }
 
             .sidebar a span {
-                display: none; /* Hide link text */
+                display: none;
+                /* Hide link text */
             }
 
             .sidebar h2 {
@@ -214,50 +228,52 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <h2>PROJECT MANAGER</h2>
-    <a href="{% url 'task' %}">
-        <i class="material-icons">task_alt</i>
-        <span>Tasks</span>
-    </a>
-    <a href="{% url 'manage_requests' %}">
-        <i class="material-icons">person</i>
-        <span>Client Details</span>
-    </a>
-    <a href="{% url '' %}">
-        <i class="material-icons">logout</i>
-        <span>Logout</span>
-    </a>
-    <a href="javascript:history.back()" class="back-button">Back</a>
-</div>
-
-<!-- Main Content -->
-<div class="main">
-    <div class="header">
-        <h1>Welcome to Your Task Manager</h1>
-        <div>
-            <span>Welcome, Project Manager</span>
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-        </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>PROJECT MANAGER</h2>
+        <a href="{% url 'task' %}">
+            <i class="material-icons">task_alt</i>
+            <span>Tasks</span>
+        </a>
+        <a href="{% url 'manage_requests' %}">
+            <i class="material-icons">person</i>
+            <span>Client Details</span>
+        </a>
+        <a href="{% url 'index' %}">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
+        <a href="javascript:history.back()" class="back-button">Back</a>
     </div>
 
-    <div class="container">
-        <!-- Add Task -->
-        <div class="column add-task">
-            <h2>Add Task</h2>
-            <a href="{% url 'create_task' %}">Add a New Task</a>
+    <!-- Main Content -->
+    <div class="main">
+        <div class="header">
+            <h1>Welcome to Your Task Manager</h1>
+            <div>
+                <span>Welcome, Project Manager</span>
+                <img src="https://via.placeholder.com/40" alt="Profile Picture">
+            </div>
         </div>
 
-        <!-- View Tasks -->
-        <div class="column view-task">
-            <h2>View Task</h2>
-            <a href="{% url 'task_list' %}">View Existing Tasks</a>
+        <div class="container">
+            <!-- Add Task -->
+            <div class="column add-task">
+                <h2>Add Task</h2>
+                <a href="{% url 'create_task' %}">Add a New Task</a>
+            </div>
+
+            <!-- View Tasks -->
+            <div class="column view-task">
+                <h2>View Task</h2>
+                <a href="{% url 'task_list' %}">View Existing Tasks</a>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
+
 </html>

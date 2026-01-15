@@ -151,29 +151,29 @@
   <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-lg sticky-top">
     <div class="container">
-        <a class="navbar-brand text-primary fw-bolder fs-1" href="index.html">CyberTrack</a> <!-- Larger brand font -->
+        <a class="navbar-brand text-primary fw-bolder fs-1" href="{% url 'index' %}">CyberTrack</a> <!-- Larger brand font -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="#">Home</a>
+                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary fw-semibold fs-4 px-4" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="project_manager_login">Manager</a>
+                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="{% url 'project_manager_login' %}">Manager</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="hr_login">HR</a>
+                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="{% url 'hr_login' %}">HR</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="login">User</a>
+                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="{% url 'login' %}">User</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="client_register">Client</a>
+                    <a class="nav-link text-primary fw-semibold fs-4 px-4" href="{% url 'client_register' %}">Client</a>
                 </li>
             </ul>
         </div>

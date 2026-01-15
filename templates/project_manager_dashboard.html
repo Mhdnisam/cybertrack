@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +17,17 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             display: flex;
-            background-color: #f1f3f4; /* Light gray */
+            background-color: #f1f3f4;
+            /* Light gray */
         }
 
         /* Sidebar Styles */
         .sidebar {
             width: 240px;
-            background: #ffffff; /* White background */
-            color: #202124; /* Dark gray text */
+            background: #ffffff;
+            /* White background */
+            color: #202124;
+            /* Dark gray text */
             padding: 20px;
             height: 100vh;
             position: fixed;
@@ -36,7 +40,8 @@
         .sidebar h2 {
             font-size: 1.3rem;
             font-weight: 500;
-            color: #1a73e8; /* Google's blue */
+            color: #1a73e8;
+            /* Google's blue */
             margin-bottom: 20px;
             text-align: center;
         }
@@ -55,13 +60,15 @@
         }
 
         .sidebar a:hover {
-            background-color: #e8f0fe; /* Light blue on hover */
+            background-color: #e8f0fe;
+            /* Light blue on hover */
             padding-left: 20px;
         }
 
         .sidebar a i {
             font-size: 1.5rem;
-            color: #1a73e8; /* Icon in Google's blue */
+            color: #1a73e8;
+            /* Icon in Google's blue */
         }
 
         /* Main Content Styles */
@@ -72,7 +79,8 @@
         }
 
         .header {
-            background: #1a73e8; /* Google's blue */
+            background: #1a73e8;
+            /* Google's blue */
             color: white;
             padding: 20px;
             border-radius: 8px;
@@ -130,7 +138,8 @@
         }
 
         .card p {
-            color: #5f6368; /* Google's gray */
+            color: #5f6368;
+            /* Google's gray */
             margin: 10px 0;
         }
 
@@ -143,35 +152,50 @@
         .stats div {
             text-align: center;
             font-size: 1rem;
-            color: #1a73e8; /* Google's blue */
+            color: #1a73e8;
+            /* Google's blue */
         }
 
         /* Back Button Styles */
         .back-button {
             margin-top: 20px;
-            padding: 12px 24px; /* Slightly larger for better clickability */
-            background: white; /* White background for a clean look */
-            color: #1a73e8; /* Google's blue for text */
-            text-decoration: none; /* No underline */
-            border-radius: 8px; /* Smooth edges */
-            border: 2px solid #1a73e8; /* Blue border to complement the text */
+            padding: 12px 24px;
+            /* Slightly larger for better clickability */
+            background: white;
+            /* White background for a clean look */
+            color: #1a73e8;
+            /* Google's blue for text */
+            text-decoration: none;
+            /* No underline */
+            border-radius: 8px;
+            /* Smooth edges */
+            border: 2px solid #1a73e8;
+            /* Blue border to complement the text */
             display: inline-block;
-            font-size: 1rem; /* Comfortable text size */
-            font-weight: 500; /* Slightly bold for emphasis */
-            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+            font-size: 1rem;
+            /* Comfortable text size */
+            font-weight: 500;
+            /* Slightly bold for emphasis */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            /* Smooth hover effects */
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
         }
 
         .back-button:hover {
-            background: #1a73e8; /* Blue background on hover */
-            color: white; /* White text on hover for contrast */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            background: #1a73e8;
+            /* Blue background on hover */
+            color: white;
+            /* White text on hover for contrast */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Enhanced shadow on hover */
         }
 
         /* Moving Text Animation */
         .moving-text {
-            background: #34a853; /* Google's green */
+            background: #34a853;
+            /* Google's green */
             color: white;
             padding: 10px;
             border-radius: 4px;
@@ -180,8 +204,13 @@
         }
 
         @keyframes move {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
         }
 
         /* Responsive Design */
@@ -198,7 +227,8 @@
             }
 
             .sidebar a span {
-                display: none; /* Hide text on small screens */
+                display: none;
+                /* Hide text on small screens */
             }
 
             .main {
@@ -222,50 +252,52 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <h2>PROJECT MANAGER</h2>
-    <a href="{% url 'task' %}"><i class="fas fa-tasks"></i><span>Tasks</span></a>
-    <a href="{% url 'manage_requests' %}"><i class="fas fa-users"></i><span>Client Details</span></a>
-    <a href="{% url '' %}"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
-    <!-- Back Button -->
-    <a href="javascript:history.back()" class="back-button">Back</a>
-</div>
-
-<!-- Main Content -->
-<div class="main">
-    <div class="header">
-        <h1>Welcome to Your Dashboard</h1>
-        <div class="profile">
-            <span>Hello, Project Manager</span>
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-        </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>PROJECT MANAGER</h2>
+        <a href="{% url 'task' %}"><i class="fas fa-tasks"></i><span>Tasks</span></a>
+        <a href="{% url 'manage_requests' %}"><i class="fas fa-users"></i><span>Client Details</span></a>
+        <a href="{% url 'index' %}"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        <!-- Back Button -->
+        <a href="javascript:history.back()" class="back-button">Back</a>
     </div>
 
-    <div class="content">
-        <div class="card">
-            <h2>Task Overview</h2>
-            <p>Monitor and manage your tasks efficiently.</p>
-            <div class="stats">
-                <div><strong>10</strong> Tasks</div>
-                <div><strong>5</strong> Completed</div>
+    <!-- Main Content -->
+    <div class="main">
+        <div class="header">
+            <h1>Welcome to Your Dashboard</h1>
+            <div class="profile">
+                <span>Hello, Project Manager</span>
+                <img src="https://via.placeholder.com/40" alt="Profile Picture">
             </div>
         </div>
 
-        <div class="card">
-            <h2>Client Details</h2>
-            <p>Review client information and requests.</p>
+        <div class="content">
+            <div class="card">
+                <h2>Task Overview</h2>
+                <p>Monitor and manage your tasks efficiently.</p>
+                <div class="stats">
+                    <div><strong>10</strong> Tasks</div>
+                    <div><strong>5</strong> Completed</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Client Details</h2>
+                <p>Review client information and requests.</p>
+            </div>
+
+            <div class="card">
+                <h2>Recent Activity</h2>
+                <p>Stay updated with the latest project activities.</p>
+            </div>
         </div>
 
-        <div class="card">
-            <h2>Recent Activity</h2>
-            <p>Stay updated with the latest project activities.</p>
-        </div>
     </div>
 
-</div>
-
 </body>
+
 </html>
